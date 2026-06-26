@@ -37,12 +37,33 @@ export type ContentItem = {
   title: string;
   hook: string;
   platform: Platform;
+  platforms?: Platform[];
   status: ContentStatus;
   createdAt: string;
+  updatedAt?: string;
+  rawIdea?: string;
+  scriptBody?: string;
+  visualCues?: string;
   slides: SlideItem[];
   caption?: string;
   hashtags?: string[];
   cta?: string;
+  audioUrl?: string | null;
+  videoUrl?: string | null;
+};
+
+export type SaveContentInput = {
+  title: string;
+  rawIdea?: string;
+  selectedHook: string;
+  scriptBody?: string;
+  visualCues?: string;
+  slides: SlideItem[];
+  caption?: string;
+  hashtags?: string[];
+  cta?: string;
+  platforms: Platform[];
+  status: ContentStatus;
 };
 
 export type ActivityLogItem = {

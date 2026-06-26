@@ -12,14 +12,13 @@ import { SlideVideoPreview } from "./SlideVideoPreview";
 import { Button } from "@/components/ui/Button";
 import { demoHook, demoScript, demoSlides, ideaPresets } from "@/lib/demo-data";
 import type { GenerateScriptResponse, PolishScriptResponse } from "@/lib/ai/types";
-import type { ActivityLogItem, BrandSettings, ContentItem, IdeaPreset, PhaseKey, Platform, SlideItem } from "@/lib/types";
-import { createId, getCurrentDateLabel } from "@/lib/utils";
+import type { ActivityLogItem, BrandSettings, IdeaPreset, PhaseKey, Platform, SaveContentInput, SlideItem } from "@/lib/types";
 
 type FactoryWorkspaceProps = {
   activityLogs: ActivityLogItem[];
   brandSettings: BrandSettings;
   onAddLog: (label: string, type?: ActivityLogItem["type"]) => void;
-  onSaveContent: (item: ContentItem) => void;
+  onSaveContent: (item: SaveContentInput) => Promise<void> | void;
   onToast: (message: string) => void;
 };
 
@@ -97,6 +96,7 @@ export function FactoryWorkspace({
   const [isBrainstorming, setIsBrainstorming] = useState(false);
   const [isGeneratingScript, setIsGeneratingScript] = useState(false);
   const [isPolishingScript, setIsPolishingScript] = useState(false);
+  const [isSavingContent, setIsSavingContent] = useState(false);
 
   const currentSlides = useMemo(() => (scriptResult ? convertGeneratedSlides(scriptResult) : demoSlides), [scriptResult]);
   const scriptText = scriptResult?.scriptBody ?? demoScriptOverride ?? demoScript;
@@ -258,23 +258,29 @@ export function FactoryWorkspace({
     );
   }
 
-  function handleSaveToLibrary() {
-    const item: ContentItem = {
-      id: createId("content"),
-      title: title.trim() || "Nội dung video demo chưa đặt tên",
-      hook: selectedHook,
-      platform: selectedPlatforms[0] ?? platform,
-      status: "Ready",
-      createdAt: getCurrentDateLabel(),
+  async function handleSaveToLibrary() {
+    if (isSavingContent) return;
+
+    const input: SaveContentInput = {
+      title: title.trim() || "Nội dung video chưa đặt tên",
+      rawIdea,
+      selectedHook,
+      scriptBody: scriptText,
+      visualCues: scriptResult?.visualCues,
       slides: currentSlides,
       caption: scriptResult?.caption,
       hashtags: scriptResult?.hashtags,
       cta: scriptResult?.cta,
+      platforms: selectedPlatforms.length ? selectedPlatforms : [platform],
+      status: "Ready",
     };
 
-    onSaveContent(item);
-    onAddLog("Đã lưu nội dung vào Content Library local.", "success");
-    onToast("Đã lưu vào kho nội dung.");
+    setIsSavingContent(true);
+    try {
+      await onSaveContent(input);
+    } finally {
+      setIsSavingContent(false);
+    }
   }
 
   function handleResetFlow() {
@@ -356,6 +362,7 @@ export function FactoryWorkspace({
             selectedPlatforms={selectedPlatforms}
             onTogglePlatform={handleTogglePlatform}
             onSaveToLibrary={handleSaveToLibrary}
+            isSaving={isSavingContent}
           />
         ) : null}
       </div>
