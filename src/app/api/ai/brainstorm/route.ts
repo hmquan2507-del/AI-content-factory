@@ -3,6 +3,7 @@ import { MissingGeminiApiKeyError, generateJsonFromGemini } from "@/lib/ai/gemin
 import { createBrainstormPrompt } from "@/lib/ai/prompts";
 import { BrainstormRequestSchema, BrainstormResponseSchema } from "@/lib/ai/schemas";
 
+export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
 export async function POST(request: Request) {

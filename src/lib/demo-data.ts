@@ -96,28 +96,34 @@ export const defaultBrandSettings: BrandSettings = {
   brandVoice: "Rõ ràng, gần gũi, có cảm giác tư vấn thật như người bán hàng am hiểu sản phẩm.",
   targetAudience: "Chủ shop nhỏ, spa, homestay, khách sạn mini và người mới làm affiliate.",
   defaultCta: "Nhắn Zalo để được tư vấn nhanh và nhận mẫu nội dung phù hợp.",
-  tonePresets: ["Chuyên nghiệp", "Gần gũi", "Bán hàng nhẹ nhàng", "Truyền cảm hứng"],
+  tonePresets: ["Thân thiện, truyền cảm hứng", "Kịch tính", "Chuyên gia", "Bán hàng mạnh"],
   ttsVoice: "Nữ miền Nam - rõ chữ, tốc độ vừa phải",
 };
 
 export const demoActivityLogs: ActivityLogItem[] = [
   {
     id: "log-1",
-    label: "Đã nạp dữ liệu demo cho Phase 1 UI.",
-    timestamp: "11:20",
-    type: "info",
-  },
-  {
-    id: "log-2",
-    label: "Kho nội dung sẵn sàng hiển thị các video mẫu.",
-    timestamp: "11:21",
+    label: "Kịch bản đã được tạo thành công.",
+    timestamp: "11:24",
     type: "success",
   },
   {
-    id: "log-3",
-    label: "API, database và render video thật chưa được kết nối ở Phase 1.",
+    id: "log-2",
+    label: "Ý tưởng đã được lưu.",
     timestamp: "11:22",
-    type: "warning",
+    type: "info",
+  },
+  {
+    id: "log-3",
+    label: "Bắt đầu tạo kịch bản.",
+    timestamp: "11:21",
+    type: "info",
+  },
+  {
+    id: "log-4",
+    label: "Dự án mới được tạo.",
+    timestamp: "11:20",
+    type: "success",
   },
 ];
 

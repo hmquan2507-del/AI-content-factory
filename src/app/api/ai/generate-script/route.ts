@@ -4,6 +4,7 @@ import { createGenerateScriptPrompt } from "@/lib/ai/prompts";
 import { GenerateScriptRequestSchema, GenerateScriptResponseSchema } from "@/lib/ai/schemas";
 import type { GenerateScriptResponse } from "@/lib/ai/types";
 
+export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
 function normalizeHashtag(hashtag: string): string {

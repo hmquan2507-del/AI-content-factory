@@ -3,6 +3,7 @@ import { MissingGeminiApiKeyError, generateJsonFromGemini } from "@/lib/ai/gemin
 import { createPolishScriptPrompt } from "@/lib/ai/prompts";
 import { PolishScriptRequestSchema, PolishScriptResponseSchema } from "@/lib/ai/schemas";
 
+export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
 export async function POST(request: Request) {
